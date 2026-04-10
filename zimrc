@@ -1,0 +1,22 @@
+# Zim modules
+# https://zimfw.sh/docs/modules/
+
+# --- Built-in modules ---
+zmodule environment    # Sane zsh defaults
+zmodule input          # Correct keybindings for Home/End/Delete etc.
+zmodule completion     # Smart tab completion with styling
+zmodule utility        # Colored ls/grep, safe rm, common helpers
+zmodule ssh            # ssh-agent management
+zmodule archive        # `extract` command for any archive format
+zmodule git            # Git aliases and helpers
+
+# --- External plugins ---
+zmodule zsh-users/zsh-completions --fpath src     # Additional completions for many CLI tools
+zmodule zsh-users/zsh-autosuggestions              # Fish-like autosuggestions
+zmodule MichaelAquilina/zsh-you-should-use          # Reminds you of aliases you forgot
+zmodule zsh-users/zsh-history-substring-search     # Type partial command, Up/Down to search
+zmodule hlissner/zsh-autopair                      # Auto-close quotes, brackets, parens
+zmodule Aloxaf/fzf-tab                             # fzf-powered tab completion
+
+# --- Must be last ---
+zmodule zsh-users/zsh-syntax-highlighting          # Command syntax highlighting (must be last)

@@ -1,0 +1,33 @@
+# Font
+font-family = JetBrains Mono
+font-size = 14
+
+# Window
+window-padding-x = 8
+window-padding-y = 4
+window-decoration = true
+macos-titlebar-style = tabs
+
+# Theme - Ghostty ships with many built-in themes
+# Run `ghostty +list-themes` to see all options
+theme = catppuccin-mocha
+
+# Cursor
+cursor-style = bar
+cursor-style-blink = false
+
+# Mouse
+mouse-hide-while-typing = true
+copy-on-select = clipboard
+
+# Shell integration (auto-detected for zsh)
+shell-integration = zsh
+
+# Scrollback
+scrollback-limit = 10000
+
+# Quick terminal (dropdown quake-style terminal)
+# Toggle with the keybind below
+keybind = global:cmd+grave_accent=toggle_quick_terminal
+quick-terminal-position = top
+quick-terminal-animation-duration = 0.15
