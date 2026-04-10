@@ -137,7 +137,7 @@ fi
 
 # --- Install zim modules ---
 echo "Installing zim modules..."
-zsh -ic 'zimfw install' 2>/dev/null || true
+TERM=xterm-256color zsh -ic 'zimfw install' 2>/dev/null || true
 
 echo ""
 echo "=== Done! Restart your terminal or run 'exec zsh' to apply changes. ==="

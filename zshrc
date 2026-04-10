@@ -1,6 +1,11 @@
 # Always start in home directory
 cd ~
 
+# Fall back to xterm-256color if current TERM is unknown
+if ! infocmp "$TERM" &>/dev/null 2>&1; then
+  export TERM=xterm-256color
+fi
+
 # PATH configuration
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:/opt/homebrew/opt/libpq/bin:/opt/homebrew/bin:$PATH
 
