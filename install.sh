@@ -3,16 +3,84 @@ set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-echo "=== Dotfiles installer ==="
+usage() {
+  echo "Usage: $0 [--local | --remote]"
+  echo ""
+  echo "  --local   Full install: Homebrew packages, Ghostty, font, zimfw, symlinks"
+  echo "  --remote  Minimal install: starship binary, zimfw, symlinks (no GUI apps)"
+  echo ""
+  echo "If no flag is given, you will be prompted."
+  exit 1
+}
 
-# --- Install Homebrew packages ---
-if command -v brew &>/dev/null; then
-  echo "Installing Homebrew packages..."
-  brew install eza bat fd fzf zoxide ripgrep starship
-  brew install --cask ghostty
-else
-  echo "WARNING: Homebrew not found. Install it first: https://brew.sh"
-  echo "Skipping package installation."
+MODE=""
+if [[ ${1:-} == "--local" ]]; then
+  MODE="local"
+elif [[ ${1:-} == "--remote" ]]; then
+  MODE="remote"
+elif [[ ${1:-} == "--help" || ${1:-} == "-h" ]]; then
+  usage
+elif [[ -n ${1:-} ]]; then
+  echo "Unknown option: $1"
+  usage
+fi
+
+if [[ -z "$MODE" ]]; then
+  echo "=== Dotfiles installer ==="
+  echo ""
+  echo "  1) Local  — full install (Homebrew, Ghostty, font, CLI tools)"
+  echo "  2) Remote — minimal install (starship binary, zimfw, symlinks only)"
+  echo ""
+  read -rp "Choose [1/2]: " choice
+  case "$choice" in
+    1) MODE="local" ;;
+    2) MODE="remote" ;;
+    *) echo "Invalid choice."; exit 1 ;;
+  esac
+fi
+
+echo ""
+echo "=== Running ${MODE} install ==="
+
+# --- Install packages ---
+if [[ "$MODE" == "local" ]]; then
+  if command -v brew &>/dev/null; then
+    echo "Installing Homebrew packages..."
+    brew install eza bat fd fzf zoxide ripgrep starship
+    echo "Installing Ghostty and Nerd Font..."
+    brew install --cask ghostty font-jetbrains-mono-nerd-font
+  else
+    echo "ERROR: Homebrew not found. Install it first: https://brew.sh"
+    exit 1
+  fi
+elif [[ "$MODE" == "remote" ]]; then
+  # Install starship if not present
+  if ! command -v starship &>/dev/null; then
+    echo "Installing starship..."
+    curl -sS https://starship.rs/install.sh | sh -s -- --yes
+  else
+    echo "starship already installed."
+  fi
+
+  # Install CLI tools if a package manager is available
+  if command -v apt-get &>/dev/null; then
+    echo "Installing CLI tools via apt..."
+    sudo apt-get update -qq
+    sudo apt-get install -y -qq fzf ripgrep fd-find bat zoxide
+    # fd and bat have different binary names on Debian/Ubuntu
+    [[ ! -e /usr/local/bin/fd ]] && sudo ln -sf "$(command -v fdfind)" /usr/local/bin/fd 2>/dev/null || true
+    [[ ! -e /usr/local/bin/bat ]] && sudo ln -sf "$(command -v batcat)" /usr/local/bin/bat 2>/dev/null || true
+    # eza not in default apt repos — install from cargo or skip
+    if ! command -v eza &>/dev/null; then
+      echo "NOTE: eza not available via apt. Install manually or via cargo: cargo install eza"
+    fi
+  elif command -v brew &>/dev/null; then
+    echo "Installing CLI tools via Homebrew..."
+    brew install eza bat fd fzf zoxide ripgrep starship
+  else
+    echo "NOTE: No supported package manager found (apt/brew)."
+    echo "Please install manually: fzf, ripgrep, fd, bat, zoxide, eza"
+  fi
 fi
 
 # --- Install zimfw ---
@@ -40,15 +108,17 @@ link() {
 link "${DOTFILES_DIR}/zshrc"         ~/.zshrc
 link "${DOTFILES_DIR}/zimrc"         ~/.zimrc
 
-mkdir -p ~/.config/ghostty
-link "${DOTFILES_DIR}/ghostty/config" ~/.config/ghostty/config
-
 mkdir -p ~/.config
 link "${DOTFILES_DIR}/starship.toml" ~/.config/starship.toml
 
+if [[ "$MODE" == "local" ]]; then
+  mkdir -p ~/.config/ghostty
+  link "${DOTFILES_DIR}/ghostty/config" ~/.config/ghostty/config
+fi
+
 # --- Install zim modules ---
 echo "Installing zim modules..."
-zsh -ic 'zimfw install' 2>/dev/null
+zsh -ic 'zimfw install' 2>/dev/null || true
 
 echo ""
-echo "=== Done! Restart your terminal to apply changes. ==="
+echo "=== Done! Restart your terminal or run 'exec zsh' to apply changes. ==="

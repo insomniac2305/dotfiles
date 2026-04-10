@@ -1,3 +1,6 @@
+# Always start in home directory
+cd ~
+
 # PATH configuration
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:/opt/homebrew/opt/libpq/bin:/opt/homebrew/bin:$PATH
 
@@ -26,6 +29,7 @@ npm() { unset -f nvm node npm npx; [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.
 npx() { unset -f nvm node npm npx; [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"; npx "$@"; }
 
 # --- Zim framework ---
+zstyle ':zim:git' aliases-prefix 'g'
 ZIM_HOME=~/.zim
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
   curl -fsSL -o ${ZIM_HOME}/zimfw.zsh https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh

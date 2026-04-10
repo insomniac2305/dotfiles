@@ -1,5 +1,5 @@
 # Font
-font-family = JetBrains Mono
+font-family = JetBrainsMono Nerd Font
 font-size = 14
 
 # Window
@@ -10,7 +10,7 @@ macos-titlebar-style = tabs
 
 # Theme - Ghostty ships with many built-in themes
 # Run `ghostty +list-themes` to see all options
-theme = catppuccin-mocha
+theme = Catppuccin Mocha
 
 # Cursor
 cursor-style = bar
