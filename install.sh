@@ -87,9 +87,14 @@ elif [[ "$MODE" == "remote" ]]; then
     # fd and bat have different binary names on Debian/Ubuntu
     [[ ! -e /usr/local/bin/fd ]] && sudo ln -sf "$(command -v fdfind)" /usr/local/bin/fd 2>/dev/null || true
     [[ ! -e /usr/local/bin/bat ]] && sudo ln -sf "$(command -v batcat)" /usr/local/bin/bat 2>/dev/null || true
-    # eza not in default apt repos — install from cargo or skip
+    # eza requires its own repo on Debian/Ubuntu
     if ! command -v eza &>/dev/null; then
-      echo "NOTE: eza not available via apt. Install manually or via cargo: cargo install eza"
+      echo "Installing eza..."
+      sudo mkdir -p /etc/apt/keyrings
+      curl -fsSL https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg 2>/dev/null
+      echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list >/dev/null
+      sudo apt-get update -qq
+      sudo apt-get install -y -qq eza
     fi
   elif command -v brew &>/dev/null; then
     echo "Installing CLI tools via Homebrew..."

@@ -68,24 +68,26 @@ zstyle ':fzf-tab:complete:*:*' fzf-preview 'bat --color=always --style=numbers -
 # --- CLI tool integrations ---
 
 # Zoxide (smart cd)
-eval "$(zoxide init zsh)"
+command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 
 # Starship prompt
-eval "$(starship init zsh)"
+command -v starship &>/dev/null && eval "$(starship init zsh)"
 
 # --- Aliases ---
 
 # eza (modern ls)
-alias ls='eza --icons=auto'
-alias ll='eza -l --icons=auto --git'
-alias la='eza -la --icons=auto --git'
-alias lt='eza --tree --level=2 --icons=auto'
+if command -v eza &>/dev/null; then
+  alias ls='eza --icons=auto'
+  alias ll='eza -l --icons=auto --git'
+  alias la='eza -la --icons=auto --git'
+  alias lt='eza --tree --level=2 --icons=auto'
+fi
 
 # bat (modern cat)
-alias cat='bat --paging=never'
+command -v bat &>/dev/null && alias cat='bat --paging=never'
 
 # fd (modern find)
-alias find='fd'
+command -v fd &>/dev/null && alias find='fd'
 
 # Keychain password manager (macOS only)
 [[ -x ~/.local/bin/keychain-passwords ]] && alias kp='~/.local/bin/keychain-passwords'
