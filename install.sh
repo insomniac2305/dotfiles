@@ -54,6 +54,31 @@ if [[ "$MODE" == "local" ]]; then
     exit 1
   fi
 elif [[ "$MODE" == "remote" ]]; then
+  # Install zsh if not present
+  if ! command -v zsh &>/dev/null; then
+    echo "Installing zsh..."
+    if command -v apt-get &>/dev/null; then
+      sudo apt-get update -qq
+      sudo apt-get install -y -qq zsh
+    else
+      echo "ERROR: zsh not found and no supported package manager to install it."
+      exit 1
+    fi
+  fi
+
+  # Set zsh as default shell if it isn't already
+  if [[ "$(basename "$SHELL")" != "zsh" ]]; then
+    echo "Setting zsh as default shell..."
+    chsh -s "$(command -v zsh)"
+  fi
+
+  # Install Ghostty terminfo for correct terminal rendering over SSH
+  if ! infocmp xterm-ghostty &>/dev/null 2>&1; then
+    echo "Installing Ghostty terminfo..."
+    curl -fsSL https://raw.githubusercontent.com/ghostty-org/ghostty/main/src/terminfo/ghostty.terminfo -o /tmp/ghostty.terminfo
+    tic -x /tmp/ghostty.terminfo 2>/dev/null && rm /tmp/ghostty.terminfo
+  fi
+
   # Install starship if not present
   if ! command -v starship &>/dev/null; then
     echo "Installing starship..."
@@ -65,7 +90,6 @@ elif [[ "$MODE" == "remote" ]]; then
   # Install CLI tools if a package manager is available
   if command -v apt-get &>/dev/null; then
     echo "Installing CLI tools via apt..."
-    sudo apt-get update -qq
     sudo apt-get install -y -qq fzf ripgrep fd-find bat zoxide
     # fd and bat have different binary names on Debian/Ubuntu
     [[ ! -e /usr/local/bin/fd ]] && sudo ln -sf "$(command -v fdfind)" /usr/local/bin/fd 2>/dev/null || true
@@ -111,10 +135,9 @@ link "${DOTFILES_DIR}/zimrc"         ~/.zimrc
 mkdir -p ~/.config
 link "${DOTFILES_DIR}/starship.toml" ~/.config/starship.toml
 
-mkdir -p ~/.local/bin
-link "${DOTFILES_DIR}/scripts/keychain-passwords.sh" ~/.local/bin/keychain-passwords
-
 if [[ "$MODE" == "local" ]]; then
+  mkdir -p ~/.local/bin
+  link "${DOTFILES_DIR}/scripts/keychain-passwords.sh" ~/.local/bin/keychain-passwords
   mkdir -p ~/.config/ghostty
   link "${DOTFILES_DIR}/ghostty/config" ~/.config/ghostty/config
 fi

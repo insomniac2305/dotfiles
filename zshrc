@@ -46,7 +46,14 @@ bindkey '^[[A' history-substring-search-up    # Up arrow
 bindkey '^[[B' history-substring-search-down  # Down arrow
 
 # fzf shell integration (Ctrl+R for history, Ctrl+T for files, Alt+C for cd)
-source <(fzf --zsh)
+if command -v fzf &>/dev/null; then
+  if fzf --zsh &>/dev/null; then
+    source <(fzf --zsh)
+  elif [[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]]; then
+    source /usr/share/doc/fzf/examples/key-bindings.zsh
+    source /usr/share/doc/fzf/examples/completion.zsh
+  fi
+fi
 
 # fzf-tab configuration
 zstyle ':fzf-tab:*' fzf-min-height 20
@@ -75,8 +82,8 @@ alias cat='bat --paging=never'
 # fd (modern find)
 alias find='fd'
 
-# Keychain password manager
-alias kp='~/.local/bin/keychain-passwords'
+# Keychain password manager (macOS only)
+[[ -x ~/.local/bin/keychain-passwords ]] && alias kp='~/.local/bin/keychain-passwords'
 
 # Load secrets (API keys, tokens)
 [ -s "$HOME/.secrets" ] && source "$HOME/.secrets"
