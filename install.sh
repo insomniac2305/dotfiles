@@ -72,13 +72,6 @@ elif [[ "$MODE" == "remote" ]]; then
     chsh -s "$(command -v zsh)"
   fi
 
-  # Install Ghostty terminfo for correct terminal rendering over SSH
-  if ! infocmp xterm-ghostty &>/dev/null 2>&1; then
-    echo "Installing Ghostty terminfo..."
-    curl -fsSL https://raw.githubusercontent.com/ghostty-org/ghostty/main/src/terminfo/ghostty.terminfo -o /tmp/ghostty.terminfo
-    tic -x /tmp/ghostty.terminfo 2>/dev/null && rm /tmp/ghostty.terminfo
-  fi
-
   # Install starship if not present
   if ! command -v starship &>/dev/null; then
     echo "Installing starship..."
