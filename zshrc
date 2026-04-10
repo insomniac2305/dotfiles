@@ -75,5 +75,8 @@ alias cat='bat --paging=never'
 # fd (modern find)
 alias find='fd'
 
+# Keychain password manager
+alias kp='~/.local/bin/keychain-passwords'
+
 # Load secrets (API keys, tokens)
 [ -s "$HOME/.secrets" ] && source "$HOME/.secrets"

@@ -111,6 +111,9 @@ link "${DOTFILES_DIR}/zimrc"         ~/.zimrc
 mkdir -p ~/.config
 link "${DOTFILES_DIR}/starship.toml" ~/.config/starship.toml
 
+mkdir -p ~/.local/bin
+link "${DOTFILES_DIR}/scripts/keychain-passwords.sh" ~/.local/bin/keychain-passwords
+
 if [[ "$MODE" == "local" ]]; then
   mkdir -p ~/.config/ghostty
   link "${DOTFILES_DIR}/ghostty/config" ~/.config/ghostty/config
