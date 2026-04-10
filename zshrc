@@ -84,7 +84,7 @@ if command -v eza &>/dev/null; then
 fi
 
 # bat (modern cat)
-command -v bat &>/dev/null && alias cat='bat --paging=never'
+command -v bat &>/dev/null && alias cat='bat --paging=never --theme="Catppuccin Mocha"'
 
 # fd (modern find)
 command -v fd &>/dev/null && alias find='fd'
