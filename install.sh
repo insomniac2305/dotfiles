@@ -114,6 +114,18 @@ if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
     https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
 fi
 
+# --- Install bat theme ---
+BAT_CMD=""
+command -v bat &>/dev/null && BAT_CMD="bat"
+command -v batcat &>/dev/null && BAT_CMD="batcat"
+if [[ -n "$BAT_CMD" ]]; then
+  echo "Installing bat theme..."
+  BAT_CONFIG_DIR="$($BAT_CMD --config-dir)"
+  mkdir -p "${BAT_CONFIG_DIR}/themes"
+  cp "${DOTFILES_DIR}/bat/themes/Catppuccin-Mocha.tmTheme" "${BAT_CONFIG_DIR}/themes/"
+  $BAT_CMD cache --build
+fi
+
 # --- Symlink dotfiles ---
 echo "Creating symlinks..."
 
