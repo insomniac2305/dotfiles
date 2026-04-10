@@ -84,7 +84,7 @@ if command -v eza &>/dev/null; then
 fi
 
 # bat (modern cat)
-export BAT_THEME="Catppuccin Mocha"
+export BAT_THEME="Catppuccin-Mocha"
 command -v bat &>/dev/null && alias cat='bat --paging=never'
 
 # fd (modern find)
