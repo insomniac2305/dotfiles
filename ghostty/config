@@ -32,3 +32,5 @@ scrollback-limit = 10000
 keybind = global:cmd+grave_accent=toggle_quick_terminal
 quick-terminal-position = top
 quick-terminal-animation-duration = 0.15
+
+keybind = opt+backspace=text:\x17
