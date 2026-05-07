@@ -145,6 +145,10 @@ link "${DOTFILES_DIR}/zimrc"         ~/.zimrc
 mkdir -p ~/.config
 link "${DOTFILES_DIR}/starship.toml" ~/.config/starship.toml
 
+mkdir -p ~/.claude
+link "${DOTFILES_DIR}/claude/settings.json"         ~/.claude/settings.json
+link "${DOTFILES_DIR}/claude/statusline-command.sh" ~/.claude/statusline-command.sh
+
 if [[ "$MODE" == "local" ]]; then
   mkdir -p ~/.local/bin
   link "${DOTFILES_DIR}/scripts/keychain-passwords.sh" ~/.local/bin/keychain-passwords

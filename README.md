@@ -10,6 +10,8 @@ Personal terminal configuration with zsh, Starship prompt, and Ghostty.
 | `zimrc` | [zimfw](https://zimfw.sh/) plugin list |
 | `starship.toml` | [Starship](https://starship.rs/) prompt — Catppuccin Mocha powerline theme |
 | `ghostty/config` | [Ghostty](https://ghostty.org/) terminal settings |
+| `claude/settings.json` | [Claude Code](https://claude.com/claude-code) user settings |
+| `claude/statusline-command.sh` | Claude Code status line — folder, branch, context bar, cost, API duration |
 | `scripts/keychain-passwords.sh` | macOS Keychain-based password manager for the terminal |
 | `install.sh` | Bootstrap script for local or remote machines |
 
@@ -45,7 +47,7 @@ The script has two modes:
 
 If no flag is given, you will be prompted to choose.
 
-The installer creates symlinks from `~/.zshrc`, `~/.zimrc`, `~/.config/starship.toml`, `~/.config/ghostty/config`, and `~/.local/bin/keychain-passwords` to this repo. Existing files are backed up with a `.bak` suffix.
+The installer creates symlinks from `~/.zshrc`, `~/.zimrc`, `~/.config/starship.toml`, `~/.config/ghostty/config`, `~/.claude/settings.json`, `~/.claude/statusline-command.sh`, and `~/.local/bin/keychain-passwords` to this repo. Existing files are backed up with a `.bak` suffix.
 
 ## Keychain password manager
 
