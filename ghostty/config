@@ -7,6 +7,9 @@ window-padding-x = 8
 window-padding-y = 4
 window-decoration = true
 macos-titlebar-style = tabs
+working-directory = home
+window-inherit-working-directory = false
+tab-inherit-working-directory = false
 
 # Theme - Ghostty ships with many built-in themes
 # Run `ghostty +list-themes` to see all options

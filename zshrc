@@ -1,6 +1,3 @@
-# Always start in home directory
-cd ~
-
 # Fall back to xterm-256color if current TERM is unknown
 if ! infocmp "$TERM" &>/dev/null 2>&1; then
   export TERM=xterm-256color
