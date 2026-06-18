@@ -1,9 +1,14 @@
 {
-  "model": "opus[1m]",
   "statusLine": {
     "type": "command",
     "command": "bash $HOME/.claude/statusline-command.sh"
   },
   "effortLevel": "high",
-  "skipAutoPermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "enabledPlugins": {
+    "jdtls-lsp@claude-plugins-official": true
+  },
+  "permissions": {
+    "deny": ["Read(./.env)", "Read(./.env.*)", "Read(*.pem)", "Read(*.key)", "Read(~/.ssh/**)"]
+  }
 }
