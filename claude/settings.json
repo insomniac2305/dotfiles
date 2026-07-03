@@ -1,14 +1,26 @@
 {
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(*.pem)",
+      "Read(*.key)",
+      "Read(~/.ssh/**)"
+    ]
+  },
+  "model": "opus[1m]",
   "statusLine": {
     "type": "command",
     "command": "bash $HOME/.claude/statusline-command.sh"
   },
-  "effortLevel": "high",
-  "skipAutoPermissionPrompt": true,
   "enabledPlugins": {
     "jdtls-lsp@claude-plugins-official": true
   },
-  "permissions": {
-    "deny": ["Read(./.env)", "Read(./.env.*)", "Read(*.pem)", "Read(*.key)", "Read(~/.ssh/**)"]
+  "effortLevel": "high",
+  "theme": "dark",
+  "autoCompactEnabled": true,
+  "skipAutoPermissionPrompt": true,
+  "env": {
+    "CLAUDE_AFK_TIMEOUT_MS": "3600000"
   }
 }
