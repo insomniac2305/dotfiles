@@ -1,4 +1,7 @@
 {
+  "env": {
+    "CLAUDE_AFK_TIMEOUT_MS": "3600000"
+  },
   "permissions": {
     "deny": [
       "Read(./.env)",
@@ -8,7 +11,6 @@
       "Read(~/.ssh/**)"
     ]
   },
-  "model": "opus[1m]",
   "statusLine": {
     "type": "command",
     "command": "bash $HOME/.claude/statusline-command.sh"
@@ -19,8 +21,5 @@
   "effortLevel": "high",
   "theme": "dark",
   "autoCompactEnabled": true,
-  "skipAutoPermissionPrompt": true,
-  "env": {
-    "CLAUDE_AFK_TIMEOUT_MS": "3600000"
-  }
+  "skipAutoPermissionPrompt": true
 }
