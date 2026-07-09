@@ -13,6 +13,9 @@ if git -C "$cwd" rev-parse --git-dir > /dev/null 2>&1; then
   branch=$(git -C "$cwd" -c gc.auto=0 symbolic-ref --short HEAD 2>/dev/null || git -C "$cwd" -c gc.auto=0 rev-parse --short HEAD 2>/dev/null)
 fi
 
+# Active model
+model_name=$(echo "$input" | jq -r '.model.display_name // empty')
+
 # Context window usage
 used_pct=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
 ctx_window=$(echo "$input" | jq -r '.context_window.context_window_size // empty')
@@ -84,6 +87,11 @@ parts+=("$(printf "${CYAN}${BOLD}%s${RESET}" "$folder")")
 # Git branch
 if [ -n "$branch" ]; then
   parts+=("$(printf "${BLUE} %s${RESET}" "$branch")")
+fi
+
+# Active model
+if [ -n "$model_name" ]; then
+  parts+=("$(printf "${YELLOW}%s${RESET}" "$model_name")")
 fi
 
 # Context bar
